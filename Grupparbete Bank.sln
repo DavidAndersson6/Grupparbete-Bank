@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grupparbete Bank", "Grupparbete Bank\Grupparbete Bank.csproj", "{2700CB9E-90C7-4952-9A65-3DA8A1B5BC38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2700CB9E-90C7-4952-9A65-3DA8A1B5BC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2700CB9E-90C7-4952-9A65-3DA8A1B5BC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2700CB9E-90C7-4952-9A65-3DA8A1B5BC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2700CB9E-90C7-4952-9A65-3DA8A1B5BC38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABC9B53C-5630-4B50-A1A5-E78ED1C4E566}
+	EndGlobalSection
+EndGlobal
