@@ -7,8 +7,8 @@ namespace Grupparbete_Bank
         static void Main(string[] args)
         {
             bool exit = false;
-            BankAccount bankAccount = new BankAccount(0, 0, string.Empty);
 
+            BankAccount.InitializeAccounts();
         
             while (!exit)
             {
@@ -27,13 +27,13 @@ namespace Grupparbete_Bank
                     case "1":
                         Console.WriteLine("Listing all bank accounts...");
 
-                        bankAccount.ListAccounts();
+                        BankAccount.ListAccounts();
                             
                         break;
 
                     case "2":
                         Console.WriteLine("Transferring money between your own accounts...");
-                        // Call the method to transfer between own accounts here
+                       BankAccount.TransferInternalAccount();
                         break;
 
                     case "3":
