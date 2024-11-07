@@ -49,16 +49,61 @@ namespace Grupparbete_Bank
         public static void TransferInternalAccount()
         {
             Console.WriteLine("Write Account ID of the account you want to withdraw from: ");
-           if ( int.TryParse(Console.ReadLine(), out int parsedSourceId))
+            if (int.TryParse(Console.ReadLine(), out int sourceAccountId))
             {
-                bankAccount.AccountId = parsedSourceId;
-                Console.WriteLine(sourceAccountId);
-            }
-           else
-            {
-                Console.WriteLine("Invalid input. Please enter a valid account ID.");
-            }
+                // Find the source account in the list
+                BankAccount sourceAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == sourceAccountId);
 
+                if (sourceAccount != null)
+                {
+                    Console.WriteLine("Write Account ID of the account you want to transfer to: ");
+                    if (int.TryParse(Console.ReadLine(), out int targetAccountId))
+                    {
+                        // Find the target account in the list
+                        BankAccount targetAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == targetAccountId);
+
+                        if (targetAccount != null)
+                        {
+                            Console.WriteLine("Enter amount to transfer: ");
+                            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+                            {
+                                if (sourceAccount.Balance >= amount)
+                                {
+                                    // Perform the transfer
+                                    sourceAccount.Balance -= amount;
+                                    targetAccount.Balance += amount;
+                                    Console.WriteLine("Transfer successful!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Insufficient funds.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid amount entered.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Target account not found.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid target account ID.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Source account not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid source account ID.");
+            }
         }
+
     }
 }
