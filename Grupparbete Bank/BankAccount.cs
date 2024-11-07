@@ -20,8 +20,6 @@ namespace Grupparbete_Bank
             AccountId = accountId;
             Balance = balance;
             AccountHolder = accountHolder;
-        
-         
         }
 
 
