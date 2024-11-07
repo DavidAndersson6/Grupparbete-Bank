@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,11 +61,14 @@ namespace Grupparbete_Bank
             {
                 Console.WriteLine($"Välkommen, {loggedInUser.Username}!");
 
+                loggedInUser.AddAccount(new BankAccount("2001", AccountType.Sparkonto, 15000));   
+                loggedInUser.AddAccount(new BankAccount("3001", AccountType.Saldokonto, 20000));
+
                 if (loggedInUser.Role == UserRole.Admin)
                 {
                     ShowAdminMenu();
                 }
-                else { Console.WriteLine("Inloggad som kund"); }
+                else { ShowUserMenu(); }
             }
             else
             {
@@ -115,6 +119,70 @@ namespace Grupparbete_Bank
 
             UserRole role = roleInput.Equals("Admin", StringComparison.OrdinalIgnoreCase) ? UserRole.Admin : UserRole.Customer;
             bank.CreateUser(loggedInUser, username, password, role);
+        }
+
+        public void ShowUserMenu()
+        {
+            bool inUserMenu = true;
+
+            while (inUserMenu)
+            {
+                Console.WriteLine("\n======Användarmenu======");
+                Console.WriteLine("Välj ett alternativ!");
+                Console.WriteLine("1: Visa konton och saldo");
+                Console.WriteLine("2: Överför pengar mellan egna konton");
+                Console.WriteLine("3: Avsluta");
+                Console.Write("Val: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1": ShowAccounts();
+                        break;
+                    case "2": TransferBetweenUserAccounts();
+                        break;
+                    case "3":
+                        inUserMenu = false;
+                        Console.WriteLine("Du loggas nu ut från user menu...");
+                        loggedInUser = null;
+                        break;
+                    default: Console.WriteLine("Felaktig input! Försök igen...");
+                        break;
+                }
+            }
+        }
+        private void ShowAccounts()
+        {
+            foreach(var account in loggedInUser.Accounts)
+            {
+                Console.WriteLine($"Kontonummer: {account.AccountNumber} | Typ: {account.Type} | Saldo: {account.Balance:C2}");
+
+            }
+        }
+
+        private void TransferBetweenUserAccounts()
+        {
+            Console.WriteLine("Här kan du överföra pengar mellan dina konton");
+            ShowAccounts();
+
+            Console.Write("Mata kontnumret som du vill överföra pengar ifrån: ");
+            string fromAccount = Console.ReadLine();
+
+            Console.Write("Mata in kontonumret som du vill överföra pengar till: ");
+            string toAccount = Console.ReadLine();
+
+            Console.Write("Ange hur mycket du vill överföra: ");
+            if(decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            {
+                bool succes = loggedInUser.TransferBetweenAccount(fromAccount, toAccount, amount);
+
+                if (!succes)
+                {
+                    Console.WriteLine("Överföringen misslyckades, försök igen...");
+                }
+                else { Console.WriteLine("Ogiltigt belopp, försök igen..."); }
+            }
+
         }
     }
 }

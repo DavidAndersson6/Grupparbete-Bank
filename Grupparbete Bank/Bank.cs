@@ -15,8 +15,9 @@ namespace Grupparbete_Bank
             users = new List<User>();
 
             users.Add(new User("admin", "admin123", UserRole.Admin));
-
+            users.Add(new User("kund", "kund123", UserRole.Customer));
         }
+
         public void RegisterUser(string username, string password, UserRole role)
         {
             if (users.Exists(u => u.Username == username))

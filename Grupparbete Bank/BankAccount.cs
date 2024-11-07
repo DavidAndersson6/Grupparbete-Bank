@@ -7,34 +7,44 @@ using System.Transactions;
 
 namespace Grupparbete_Bank
 {
+    public enum AccountType
+    {
+        Sparkonto,
+        Saldokonto
+
+    }
     public class BankAccount
     {
-        public int AccountId { get; set; }
+        public AccountType Type { get; private set; }
         public decimal Balance { get; set; }
-        public string AccountHolder { get; set; }
+        public string AccountNumber { get; set; }
 
-        public BankAccount(int accountId, decimal balance, string accountHolder)
+        public BankAccount(string accountNumber, AccountType type, decimal startBalance = 0)
         {
-            AccountId = accountId;
-            Balance = balance;
-            AccountHolder = accountHolder;
+            Type = type;
+            Balance = startBalance;
+            AccountNumber = accountNumber;
         }
 
-        public void ListAccounts()
+       public void Deposit(decimal amount)
         {
-            List<BankAccount> bankAccounts = new List<BankAccount> ();
-            bankAccounts.Add(new BankAccount(1, 1000.5m, "Alice"));
-            bankAccounts.Add(new BankAccount(2, 600.755m, "Markus"));
-
-
-
-            foreach (BankAccount bankAccount in bankAccounts)
+            if(amount >= 0)
             {
-                Console.WriteLine($"Account ID: {bankAccount.AccountId}, Balance: {bankAccount.Balance}, Holder: {bankAccount.AccountHolder}");
+                Balance += amount;
             }
         }
 
-        public void runBank() 
+        public bool Withdraw(decimal amount)
+        {
+            if(amount > 0 && amount <= Balance)
+            {
+                Balance -= amount;
+                return true;
+            }
+            return false;
+        }
+
+       /* public void runBank() 
         {
             bool exit = false;
             BankAccount bankAccount = new BankAccount(0, 0, string.Empty);
@@ -87,6 +97,6 @@ namespace Grupparbete_Bank
 
                 Console.WriteLine(); // Adds a line for better readability
             }
-        }
+        }*/
     }
 }
