@@ -1,0 +1,7 @@
+C:\Users\ÄGARE\source\repos\HenricBank\bin\Debug\HenricBank.exe.config
+C:\Users\ÄGARE\source\repos\HenricBank\bin\Debug\HenricBank.exe
+C:\Users\ÄGARE\source\repos\HenricBank\bin\Debug\HenricBank.pdb
+C:\Users\ÄGARE\source\repos\HenricBank\obj\Debug\HenricBank.csproj.AssemblyReference.cache
+C:\Users\ÄGARE\source\repos\HenricBank\obj\Debug\HenricBank.csproj.CoreCompileInputs.cache
+C:\Users\ÄGARE\source\repos\HenricBank\obj\Debug\HenricBank.exe
+C:\Users\ÄGARE\source\repos\HenricBank\obj\Debug\HenricBank.pdb
