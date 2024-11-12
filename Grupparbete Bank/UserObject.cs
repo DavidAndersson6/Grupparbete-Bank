@@ -71,6 +71,7 @@ namespace Grupparbete_Bank
             if(fromAccount.Balance < amount)
             {
                 Console.WriteLine("Du har tyvärr inte tillräckligt med pengar");
+                return false;
             }
 
             fromAccount.Withdraw(amount);

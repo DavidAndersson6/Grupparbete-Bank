@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -83,8 +84,8 @@ namespace Grupparbete_Bank
             {
                 Console.WriteLine("\n======Admin-Meny======");
                 Console.WriteLine("Välj ett alternativ!");
-                Console.WriteLine("1: Skapa en ny användare");
-                Console.WriteLine("2: Avsluta");
+                Console.WriteLine("1: Skapa en ny kund");
+                Console.WriteLine("2: Logga ut");
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
 
@@ -114,11 +115,7 @@ namespace Grupparbete_Bank
             Console.Write("Ange ett lösenord för användaren: ");
             string password = Console.ReadLine();
 
-            Console.Write("Ange roll för andvändaren du skapar. (Admin/Customer): ");
-            string roleInput = Console.ReadLine();
-
-            UserRole role = roleInput.Equals("Admin", StringComparison.OrdinalIgnoreCase) ? UserRole.Admin : UserRole.Customer;
-            bank.CreateUser(loggedInUser, username, password, role);
+            bank.RegisterUser(username, password, UserRole.Customer);
         }
 
         public void ShowUserMenu()
@@ -131,7 +128,7 @@ namespace Grupparbete_Bank
                 Console.WriteLine("Välj ett alternativ!");
                 Console.WriteLine("1: Visa konton och saldo");
                 Console.WriteLine("2: Överför pengar mellan egna konton");
-                Console.WriteLine("3: Avsluta");
+                Console.WriteLine("3: Logga ut");
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
 
@@ -159,7 +156,6 @@ namespace Grupparbete_Bank
 
             }
         }
-
         private void TransferBetweenUserAccounts()
         {
             Console.WriteLine("Här kan du överföra pengar mellan dina konton");
@@ -176,13 +172,15 @@ namespace Grupparbete_Bank
             {
                 bool succes = loggedInUser.TransferBetweenAccount(fromAccount, toAccount, amount);
 
-                if (!succes)
+                if (succes)
                 {
-                    Console.WriteLine("Överföringen misslyckades, försök igen...");
+                    Console.WriteLine($"Överföringen av {amount} från {fromAccount} lyckades");
                 }
-                else { Console.WriteLine("Ogiltigt belopp, försök igen..."); }
-            }
+                else { Console.WriteLine("Överföringen misslyckades. Kontrollera saldot eller kontonumret"); }
 
+            }
+                
+            else { Console.WriteLine("Ogiltigt beloppp. Försök igen..."); }
         }
     }
 }

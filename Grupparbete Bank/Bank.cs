@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,8 +27,18 @@ namespace Grupparbete_Bank
                 return;
             }
 
-            users.Add(new User(password, username, role));
-            Console.WriteLine($"Användare är skapad: {username}");
+            //users.Add(new User(password, username, role));
+            //Console.WriteLine($"Användare {username} är skapad");
+
+            User newUser = new User(username, password, role);
+
+            if(role == UserRole.Customer)
+            {
+                newUser.AddAccount(new BankAccount("100" + (users.Count + 1).ToString(), AccountType.Saldokonto, 0)); // Skapar ett konto med unikt kontonummer
+            }
+
+            users.Add(newUser);//Användare sparad i listan
+            Console.WriteLine($"Användare {username} är skapad");
         }
 
         public User Login(string username, string password)
