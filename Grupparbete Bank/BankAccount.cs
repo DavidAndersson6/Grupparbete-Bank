@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static Grupparbete_Bank.Transaction;
 
 namespace Grupparbete_Bank
 {
@@ -14,7 +15,10 @@ namespace Grupparbete_Bank
         public string AccountHolder { get; set; }
 
         public static List<BankAccount> bankAccounts;
-      
+
+
+
+
         public BankAccount(int accountId, decimal balance, string accountHolder)
         {
             AccountId = accountId;
@@ -46,6 +50,7 @@ namespace Grupparbete_Bank
         //int sourceAccountId, int targetAccountId, decimal amount
         public static void TransferInternalAccount()
         {
+
             Console.WriteLine("Write Account ID of the account you want to withdraw from: ");
             if (int.TryParse(Console.ReadLine(), out int sourceAccountId))
             {
@@ -67,10 +72,20 @@ namespace Grupparbete_Bank
                             {
                                 if (sourceAccount.Balance >= amount)
                                 {
+
                                     // Perform the transfer
                                     sourceAccount.Balance -= amount;
                                     targetAccount.Balance += amount;
                                     Console.WriteLine("Transfer successful!");
+                                    TransactionLogger.Instance.AddLogEntry(
+                                                                          "Transfer",
+                                                                          amount,
+                                                                          sourceAccount.AccountId.ToString(),
+                                                                          targetAccount.AccountId.ToString(),
+                                                                          "Funds transfer between accounts"
+                                                                      );
+
+                           
                                 }
                                 else
                                 {

@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using static Grupparbete_Bank.Transaction;
 
 namespace Grupparbete_Bank
 {
@@ -9,19 +10,20 @@ namespace Grupparbete_Bank
             bool exit = false;
 
             BankAccount.InitializeAccounts();
-        
+            
+
             while (!exit)
             {
                 Console.WriteLine("Select an option:");
                 Console.WriteLine("1. List of bank accounts");
                 Console.WriteLine("2. Transfer money between two of my own accounts");
                 Console.WriteLine("3. Transfer money to other accounts");
-                Console.WriteLine("4. Open new account");
+                Console.WriteLine("4. See Log");
                 Console.WriteLine("5. Exit");
 
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
-
+             
                 switch (choice)
                 {
                     case "1":
@@ -42,7 +44,8 @@ namespace Grupparbete_Bank
                         break;
 
                     case "4":
-                        Console.WriteLine("Opening a new account...");
+                        Console.WriteLine("Log...");
+                        LogViewer.ShowLog();
                         // Call the method to open a new account here
                         break;
 
