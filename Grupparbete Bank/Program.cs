@@ -1,10 +1,14 @@
-﻿namespace InitialBacklog;
+using System.Net.Sockets;
 
-public class Program
+class Program
 {
     static void Main(string[] args)
     {
-        BankService bankService = new BankService();
-        bankService.StartBankServices();
+        var processor = new TransactionProcessor();
+        
+        processor.AddTransactionFromCustomer();
+        
+        Console.WriteLine("All the transactions have been processed. Waiting for processing every 15 minutes..");
+        Console.ReadLine();
     }
-}
+}    
