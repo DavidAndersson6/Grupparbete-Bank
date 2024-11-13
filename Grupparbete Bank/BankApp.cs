@@ -25,7 +25,7 @@ namespace Grupparbete_Bank
             Console.ForegroundColor = ConsoleColor.Red;
 
             Console.WriteLine(@" 
-   ⠀      ⠀⠀⢱⣆⠀⠀⠀⠀⠀⠀
+   ⠀   ⢱⣆⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠈⣿⣷⡀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣧⠀⠀⠀
 ⠀⠀⠀⠀⡀⢠⣿⡟⣿⣿⣿⡇⠀⠀
