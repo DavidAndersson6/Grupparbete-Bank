@@ -11,20 +11,31 @@ namespace Grupparbete_Bank
     {
         Sparkonto,
         Saldokonto
+    }
 
+    public enum Currency
+    {
+        SEK,
+        USD,
+        EUR
     }
     public class BankAccount
     {
         public AccountType Type { get; private set; }
         public decimal Balance { get; set; }
         public string AccountNumber { get; set; }
+        public Currency AccountCurrency { get; set; } // Ny egenskap för valuta
 
-        public BankAccount(string accountNumber, AccountType type, decimal startBalance = 0)
+
+        public BankAccount(string accountNumber, AccountType type, Currency currency, decimal startBalance = 0)
         {
             Type = type;
             Balance = startBalance;
             AccountNumber = accountNumber;
+            AccountCurrency = currency;
         }
+
+        public BankAccount() { }
 
        public void Deposit(decimal amount)
         {

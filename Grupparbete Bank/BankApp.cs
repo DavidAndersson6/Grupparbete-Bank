@@ -62,8 +62,7 @@ namespace Grupparbete_Bank
             {
                 Console.WriteLine($"Välkommen, {loggedInUser.Username}!");
 
-                loggedInUser.AddAccount(new BankAccount("2001", AccountType.Sparkonto, 15000));   
-                loggedInUser.AddAccount(new BankAccount("3001", AccountType.Saldokonto, 20000));
+                //loggedInUser.AddAccount(new BankAccount("2001", AccountType.Saldokonto,Currency.SEK ,20000));
 
                 if (loggedInUser.Role == UserRole.Admin)
                 {
@@ -115,7 +114,37 @@ namespace Grupparbete_Bank
             Console.Write("Ange ett lösenord för användaren: ");
             string password = Console.ReadLine();
 
-            bank.RegisterUser(username, password, UserRole.Customer);
+            // Välj kontovaluta
+            Console.WriteLine("Välj valuta för användarens konto:");
+            foreach (Currency currency in Enum.GetValues(typeof(Currency)))
+            {
+                Console.WriteLine($"{(int)currency}: {currency}");
+            }
+
+            //bank.RegisterUser(username, password, UserRole.Customer);
+
+            Currency selectedCurrency;
+            if (Enum.TryParse(Console.ReadLine(), out selectedCurrency))
+            {
+                // Skapa användaren och konto med vald valuta
+                User newUser = bank.RegisterUser(username, password, UserRole.Customer);
+
+                if (newUser != null)
+                {
+                    Console.Write("Ange startbelopp för kontot: ");
+                    decimal startBalance = decimal.Parse(Console.ReadLine());
+
+                    string accountNumber = $"ACC{new Random().Next(1000, 9999)}"; // Generera ett konto-ID
+                    BankAccount newAccount = new BankAccount(accountNumber, AccountType.Saldokonto, selectedCurrency, startBalance);
+
+                    newUser.AddAccount(newAccount);
+                    Console.WriteLine($"Användare och konto skapade med {selectedCurrency} som valuta.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltig valuta. Försök igen.");
+            }
         }
 
         public void ShowUserMenu()
@@ -143,6 +172,9 @@ namespace Grupparbete_Bank
                         LogViewer.ShowLog();
                         break;
                     case "4":
+                        TransferToOtherUser();
+                        break;
+                    case "4":
                         inUserMenu = false;
                         Console.WriteLine("Du loggas nu ut från user menu...");
                         loggedInUser = null;
@@ -156,7 +188,7 @@ namespace Grupparbete_Bank
         {
             foreach(var account in loggedInUser.Accounts)
             {
-                Console.WriteLine($"Kontonummer: {account.AccountNumber} | Typ: {account.Type} | Saldo: {account.Balance:C2}");
+                Console.WriteLine($"Kontonummer: {account.AccountNumber} | Typ: {account.Type} | Saldo: {account.Balance} | Valuta: {account.AccountCurrency}");
 
             }
         }
@@ -194,6 +226,28 @@ namespace Grupparbete_Bank
             }
                 
             else { Console.WriteLine("Ogiltigt beloppp. Försök igen..."); }
+        }
+
+        private void TransferToOtherUser()
+        {
+            Console.WriteLine("Överför pengar till ett annat konto");
+
+            Console.WriteLine("Ange mottagarens kontonummer");
+            string toAccountNumber = Console.ReadLine();
+
+            Console.WriteLine("Ange beloppet som du vill överföra");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
+            {
+                bool success = bank.TransferToOtherUser(loggedInUser, toAccountNumber, amount);
+                if (!success)
+                {
+                    Console.WriteLine("Överföringen misslyckades. Kontrollera beloppet eller kontonumret.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt belopp. Försök igen...");
+            }
         }
     }
 }
