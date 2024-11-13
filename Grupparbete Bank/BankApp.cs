@@ -12,19 +12,15 @@ namespace Grupparbete_Bank
     {
         private Bank bank;
         private User loggedInUser;
-
-        public BankApp()
-        {
-            bank = new Bank();
-
-        }
-        public void Run()
-        {
-            Console.OutputEncoding = Encoding.UTF8; //Stöder specialtecken
-            Console.WriteLine("Välkommen till FlammanBank :)");
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            Console.WriteLine(@" 
+        private string bankTitleArt = @"
+  ______ _                                       ____              _    
+ |  ____| |                                     |  _ \            | |   
+ | |__  | | __ _ _ __ ___  _ __ ___   __ _ _ __ | |_) | __ _ _ __ | | __
+ |  __| | |/ _` | '_ ` _ \| '_ ` _ \ / _` | '_ \|  _ < / _` | '_ \| |/ /
+ | |    | | (_| | | | | | | | | | | | (_| | | | | |_) | (_| | | | |   < 
+ |_|    |_|\__,_|_| |_| |_|_| |_| |_|\__,_|_| |_|____/ \__,_|_| |_|_|\_\
+";
+        private string titleArt = @" 
    ⠀   ⢱⣆⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠈⣿⣷⡀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣧⠀⠀⠀
@@ -37,7 +33,19 @@ namespace Grupparbete_Bank
 ⠀⠹⣿⣿⡄⠀⠀⠀⠀⠀⢠⣿⡞⠁
 ⠀⠀⠈⠛⢿⣄⠀⠀⠀⣠⠞⠋⠀⠀
 ⠀⠀⠀⠀⠀⠀⠉⠀
-");
+";
+        public BankApp()
+        {
+            bank = new Bank();
+
+        }
+        public void Run()
+        {
+            Console.OutputEncoding = Encoding.UTF8; //Stöder specialtecken
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(bankTitleArt);
+            Console.WriteLine(titleArt);
             Console.ResetColor();
             bool isRunning = true;
 
@@ -133,7 +141,7 @@ namespace Grupparbete_Bank
             string password = Console.ReadLine();
 
             // Välj kontovaluta
-            Console.WriteLine("Välj valuta för användarens konto:");
+            Console.WriteLine("Välj valuta för saldokontot:");
             foreach (Currency currency in Enum.GetValues(typeof(Currency)))
             {
                 Console.WriteLine($"{(int)currency}: {currency}");
@@ -149,14 +157,14 @@ namespace Grupparbete_Bank
 
                 if (newUser != null)
                 {
-                    Console.Write("Ange startbelopp för kontot: ");
+                    Console.Write("Ange startbelopp för saldokontot: ");
                     decimal startBalance = decimal.Parse(Console.ReadLine());
 
                     string accountNumber = $"ACC{new Random().Next(1000, 9999)}"; // Generera ett konto-ID
                     BankAccount newAccount = new BankAccount(accountNumber, AccountType.Saldokonto, selectedCurrency, startBalance);
 
                     newUser.AddAccount(newAccount);
-                    Console.WriteLine($"Användare och konto skapade med {selectedCurrency} som valuta.");
+                    Console.WriteLine($"Ett saldokonto och ett sparkonto har skapats");
                 }
             }
             else
@@ -175,9 +183,10 @@ namespace Grupparbete_Bank
                 Console.WriteLine("Välj ett alternativ!");
                 Console.WriteLine("1: Visa konton och saldo");
                 Console.WriteLine("2: Överför pengar mellan egna konton");
-                Console.WriteLine("3: Överför pengar mellan andra konton");
-                Console.WriteLine("4: Se Transaktionslogg");
-                Console.WriteLine("5: Logga ut");
+                Console.WriteLine("3: Överför pengar till ett annat konto");
+                Console.WriteLine("4: Ta lån");
+                Console.WriteLine("5: Se Transaktionslogg (Intern överföring)");
+                Console.WriteLine("6: Logga ut");
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
 
@@ -191,9 +200,12 @@ namespace Grupparbete_Bank
                         TransferToOtherUser();
                         break;
                     case "4":
-                        LogViewer.ShowLog();
+                        LoanMoney();
                         break;
                     case "5":
+                        LogViewer.ShowLog();
+                        break;
+                    case "6":
                         inUserMenu = false;
                         Console.WriteLine("Du loggas nu ut från user menu...");
                         loggedInUser = null;
@@ -274,6 +286,45 @@ namespace Grupparbete_Bank
             else
             {
                 Console.WriteLine("Ogiltigt belopp. Försök igen...");
+            }
+        }
+
+        public void LoanMoney()
+        {
+            if (loggedInUser == null || loggedInUser.Role != UserRole.Customer)
+            {
+                Console.WriteLine("Endast inloggade kunder kan ansöka om lån.");
+                return;
+            }
+
+            Console.Write("Ange beloppet du vill låna: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal loanAmount) && loanAmount > 0)
+            {
+                decimal totalBalance = loggedInUser.Accounts.Sum(account => account.Balance);
+                decimal maxLoanAmount = totalBalance * 5;  // Maxgräns
+
+                if (loggedInUser.TotalLoanAmount + loanAmount > maxLoanAmount)
+                {
+                    Console.WriteLine($"Du kan inte låna mer än 5 gånger ditt saldo i detta fall ({maxLoanAmount}).");
+                    return;
+                }
+
+                // Lägg till lånet till användarens konto (du kan skapa ett särskilt "lånekonto" om du vill)
+                BankAccount primaryAccount = loggedInUser.Accounts.FirstOrDefault();
+                if (primaryAccount != null)
+                {
+                    primaryAccount.Deposit(loanAmount);
+                    loggedInUser.TotalLoanAmount += loanAmount; // Uppdatera användarens totala lånebelopp
+                    Console.WriteLine($"Lån godkänt! {loanAmount} har lagts till på kontonumret {primaryAccount.AccountNumber}.");
+                }
+                else
+                {
+                    Console.WriteLine("Inget giltigt konto hittades att lägga lånet på.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ogiltigt belopp. Försök igen.");
             }
         }
     }

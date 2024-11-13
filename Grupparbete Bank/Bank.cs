@@ -43,7 +43,7 @@ namespace Grupparbete_Bank
 
             if(role == UserRole.Customer)
             {
-                Console.WriteLine("Välj valuta för kundens konto:");
+                Console.WriteLine("Välj valuta för sparkontot:");
                 foreach (Currency currency in Enum.GetValues(typeof(Currency)))
                 {
                     Console.WriteLine($"{(int)currency}: {currency}");
@@ -53,7 +53,7 @@ namespace Grupparbete_Bank
                 {
                     string accountNumber = "100" + (users.Count + 1).ToString(); // Generera unikt kontonummer
                     newUser.AddAccount(new BankAccount(accountNumber, AccountType.Sparkonto, selectedCurrency, 0));
-                    Console.WriteLine($"Kundkonto skapades med valuta: {selectedCurrency}");
+                   // Console.WriteLine($"Ett sparkonto har skapats med valuta: {selectedCurrency}");
                 }
 
                 else
@@ -82,7 +82,7 @@ namespace Grupparbete_Bank
 
             if (user.IsLocked)
             {
-                Console.WriteLine("Ditt konto är låst på grund av för många misslyckade inloggningsförsök.");
+                Console.WriteLine("Ditt konto är låst på grund av för många misslyckade inloggningsförsök (1min).");
                 return null;
             }
 

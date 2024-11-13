@@ -19,6 +19,8 @@ namespace Grupparbete_Bank
         public bool IsLocked { get; private set; }
         public UserRole Role { get; private set; }
         public DateTime LockedUntil { get; private set; } // Tid när kontot låses upp
+        public decimal TotalLoanAmount { get; set; } = 0m; // Totalt lånebelopp för användaren
+
 
 
         public List<BankAccount> Accounts { get; private set; }
