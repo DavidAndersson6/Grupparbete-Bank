@@ -20,7 +20,25 @@ namespace Grupparbete_Bank
         }
         public void Run()
         {
-            Console.WriteLine("Välkommen till banken!\n");
+            Console.OutputEncoding = Encoding.UTF8; //Stöder specialtecken
+            Console.WriteLine("Välkommen till FlammanBank :)");
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.WriteLine(@" 
+   ⠀      ⠀⠀⢱⣆⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠈⣿⣷⡀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣧⠀⠀⠀
+⠀⠀⠀⠀⡀⢠⣿⡟⣿⣿⣿⡇⠀⠀
+⠀⠀⠀⠀⣳⣼⣿⡏⢸⣿⣿⣿⢀⠀
+⠀⠀⠀⣰⣿⣿⡿⠁⢸⣿⣿⡟⣼⡆
+⢰⢀⣾⣿⣿⠟⠀⠀⣾⢿⣿⣿⣿⣿
+⢸⣿⣿⣿⡏⠀⠀⠀⠃⠸⣿⣿⣿⡿
+⢳⣿⣿⣿⠀⠀⠀⠀⠀⠀⢹⣿⡿⡁
+⠀⠹⣿⣿⡄⠀⠀⠀⠀⠀⢠⣿⡞⠁
+⠀⠀⠈⠛⢿⣄⠀⠀⠀⣠⠞⠋⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠀
+");
+            Console.ResetColor();
             bool isRunning = true;
 
             while (isRunning)
