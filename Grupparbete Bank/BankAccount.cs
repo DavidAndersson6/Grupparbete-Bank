@@ -8,115 +8,96 @@ using static Grupparbete_Bank.Transaction;
 
 namespace Grupparbete_Bank
 {
+    public enum AccountType
+    {
+        Sparkonto,
+        Saldokonto
+
+    }
     public class BankAccount
     {
-        public int AccountId { get; set; }
+        public AccountType Type { get; private set; }
         public decimal Balance { get; set; }
-        public string AccountHolder { get; set; }
+        public string AccountNumber { get; set; }
 
-        public static List<BankAccount> bankAccounts;
-
-
-
-
-        public BankAccount(int accountId, decimal balance, string accountHolder)
+        public BankAccount(string accountNumber, AccountType type, decimal startBalance = 0)
         {
-            AccountId = accountId;
-            Balance = balance;
-            AccountHolder = accountHolder;
+            Type = type;
+            Balance = startBalance;
+            AccountNumber = accountNumber;
         }
 
-
-        public static void InitializeAccounts()
+       public void Deposit(decimal amount)
         {
-            bankAccounts = new List<BankAccount>
+            if(amount >= 0)
             {
-                new BankAccount(1, 1000.5m, "Alice"),
-                new BankAccount(2, 600.755m, "Markus")
-            };
-        }
-
-
-        public static void ListAccounts()
-        {
-          
-            foreach (BankAccount bankAccount in bankAccounts)
-            {
-                Console.WriteLine($"Account ID: {bankAccount.AccountId}, Balance: {bankAccount.Balance}, Holder: {bankAccount.AccountHolder}");
+                Balance += amount;
             }
         }
 
-
-        //int sourceAccountId, int targetAccountId, decimal amount
-        public static void TransferInternalAccount()
+        public bool Withdraw(decimal amount)
         {
-
-            Console.WriteLine("Write Account ID of the account you want to withdraw from: ");
-            if (int.TryParse(Console.ReadLine(), out int sourceAccountId))
+            if(amount > 0 && amount <= Balance)
             {
-                // Find the source account in the list
-                BankAccount sourceAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == sourceAccountId);
+                Balance -= amount;
+                return true;
+            }
+            return false;
+        }
 
-                if (sourceAccount != null)
+       /* public void runBank() 
+        {
+            bool exit = false;
+            BankAccount bankAccount = new BankAccount(0, 0, string.Empty);
+
+            while (!exit)
+            {
+                Console.WriteLine("Select an option:");
+                Console.WriteLine("1. List of bank accounts");
+                Console.WriteLine("2. Transfer money between two of my own accounts");
+                Console.WriteLine("3. Transfer money to other accounts");
+                Console.WriteLine("4. Open new account");
+                Console.WriteLine("5. Exit");
+
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
                 {
-                    Console.WriteLine("Write Account ID of the account you want to transfer to: ");
-                    if (int.TryParse(Console.ReadLine(), out int targetAccountId))
-                    {
-                        // Find the target account in the list
-                        BankAccount targetAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == targetAccountId);
+                    case "1":
+                        Console.WriteLine("Listing all bank accounts...");
 
-                        if (targetAccount != null)
-                        {
-                            Console.WriteLine("Enter amount to transfer: ");
-                            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
-                            {
-                                if (sourceAccount.Balance >= amount)
-                                {
+                        bankAccount.ListAccounts();
 
-                                    // Perform the transfer
-                                    sourceAccount.Balance -= amount;
-                                    targetAccount.Balance += amount;
-                                    Console.WriteLine("Transfer successful!");
-                                    TransactionLogger.Instance.AddLogEntry(
-                                                                          "Transfer",
-                                                                          amount,
-                                                                          sourceAccount.AccountId.ToString(),
-                                                                          targetAccount.AccountId.ToString(),
-                                                                          "Funds transfer between accounts"
-                                                                      );
+                        break;
 
-                           
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Insufficient funds.");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid amount entered.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Target account not found.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid target account ID.");
-                    }
+                    case "2":
+                        Console.WriteLine("Transferring money between your own accounts...");
+                        // Call the method to transfer between own accounts here
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Transferring money to other accounts...");
+                        // Call the method to transfer to other accounts here
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Opening a new account...");
+                        // Call the method to open a new account here
+                        break;
+
+                    case "5":
+                        Console.WriteLine("Exiting the program...");
+                        exit = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a number from 1 to 5.");
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("Source account not found.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid source account ID.");
-            }
-        }
 
+                Console.WriteLine(); // Adds a line for better readability
+            }
+        }*/
     }
 }
