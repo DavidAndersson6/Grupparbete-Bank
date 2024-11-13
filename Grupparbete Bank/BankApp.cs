@@ -175,8 +175,9 @@ namespace Grupparbete_Bank
                 Console.WriteLine("Välj ett alternativ!");
                 Console.WriteLine("1: Visa konton och saldo");
                 Console.WriteLine("2: Överför pengar mellan egna konton");
-                Console.WriteLine("3: Se Transaktionslogg");
-                Console.WriteLine("4: Logga ut");
+                Console.WriteLine("3: Överför pengar mellan andra konton");
+                Console.WriteLine("4: Se Transaktionslogg");
+                Console.WriteLine("5: Logga ut");
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
 
@@ -187,12 +188,12 @@ namespace Grupparbete_Bank
                     case "2": TransferBetweenUserAccounts();
                         break;
                     case "3":
-                        LogViewer.ShowLog();
-                        break;
-                    case "4":
                         TransferToOtherUser();
                         break;
                     case "4":
+                        LogViewer.ShowLog();
+                        break;
+                    case "5":
                         inUserMenu = false;
                         Console.WriteLine("Du loggas nu ut från user menu...");
                         loggedInUser = null;
@@ -228,15 +229,22 @@ namespace Grupparbete_Bank
 
                 if (succes)
                 {
-                    Console.WriteLine($"Överföringen av {amount} från {fromAccount} lyckades");
-                    Transaction.TransactionLogger.Instance.AddLogEntry(
+                //    Console.WriteLine($"Överföringen av {amount} från {fromAccount} lyckades");
+
+                    var sourceAccount = loggedInUser.Accounts.FirstOrDefault(a => a.AccountNumber == fromAccount);
+                    if (sourceAccount != null)
+                    {
+                        Currency selectedCurrency = sourceAccount.AccountCurrency;
+                        Transaction.TransactionLogger.Instance.AddLogEntry(
                transactionType: "Internal Transfer",
                amount: amount,
                sourceAccount: fromAccount,
                destinationAccount: toAccount,
-               description: "Internal transfer between user accounts"
+               description: "Internal transfer between user accounts",
+               sourceAccountCurrency: selectedCurrency.ToString()
+
            );
-                    
+                    }
 
                 }
                 else { Console.WriteLine("Överföringen misslyckades. Kontrollera saldot eller kontonumret"); }
@@ -257,6 +265,7 @@ namespace Grupparbete_Bank
             if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
             {
                 bool success = bank.TransferToOtherUser(loggedInUser, toAccountNumber, amount);
+               
                 if (!success)
                 {
                     Console.WriteLine("Överföringen misslyckades. Kontrollera beloppet eller kontonumret.");
