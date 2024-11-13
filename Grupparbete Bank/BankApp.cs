@@ -175,7 +175,8 @@ namespace Grupparbete_Bank
                 Console.WriteLine("Välj ett alternativ!");
                 Console.WriteLine("1: Visa konton och saldo");
                 Console.WriteLine("2: Överför pengar mellan egna konton");
-                Console.WriteLine("3: Se Transaktionslogg");
+                Console.WriteLine("3: Överför pengar mellan andra konton");
+                Console.WriteLine("4: Se Transaktionslogg");
                 Console.WriteLine("4: Logga ut");
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
@@ -187,12 +188,12 @@ namespace Grupparbete_Bank
                     case "2": TransferBetweenUserAccounts();
                         break;
                     case "3":
-                        LogViewer.ShowLog();
-                        break;
-                    case "4":
                         TransferToOtherUser();
                         break;
                     case "4":
+                        LogViewer.ShowLog();
+                        break;
+                    case "5":
                         inUserMenu = false;
                         Console.WriteLine("Du loggas nu ut från user menu...");
                         loggedInUser = null;
