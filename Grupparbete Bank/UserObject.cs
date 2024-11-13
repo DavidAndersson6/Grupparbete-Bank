@@ -18,6 +18,8 @@ namespace Grupparbete_Bank
         public int FailedLoginAttempts { get; private set; }
         public bool IsLocked { get; private set; }
         public UserRole Role { get; private set; }
+        public DateTime LockedUntil { get; private set; } // Tid när kontot låses upp
+
 
         public List<BankAccount> Accounts { get; private set; }
 
@@ -30,6 +32,8 @@ namespace Grupparbete_Bank
             this.IsLocked = false;
             this.Role = role;
             this.Accounts = new List<BankAccount>();
+            this.LockedUntil = DateTime.MinValue; // Ingen låsning 
+
         }
         public bool CheckPassword(string password)
         {
@@ -42,13 +46,28 @@ namespace Grupparbete_Bank
 
             if (FailedLoginAttempts >= 3)
             {
-                IsLocked = true;
+                //IsLocked = true;
+                LockAccount();  // Lås kontot efter tre misslyckade inloggningar
+
                 Console.WriteLine("Du har misslyckts för många gånger. Kontot låser sig nu..");
             }
         }
         public void ResetFailedAttempts()
         {
             FailedLoginAttempts = 0;
+        }
+
+        public void LockAccount()
+        {
+            IsLocked = true;
+            LockedUntil = DateTime.Now.AddMinutes(1);  // Kontot låses i 1 minut
+        }
+
+        public void UnlockAccount()
+        {
+            IsLocked = false;
+            LockedUntil = DateTime.MinValue; // Återställ låsningen
+            Console.WriteLine("Kontot har återaktiverats.");
         }
 
         public void AddAccount(BankAccount account)
@@ -80,5 +99,7 @@ namespace Grupparbete_Bank
             Console.WriteLine($"Överföring av {amount:C2} från konto {fromAccountNumber} till konto {toAccountNumber} har skett!");
             return true;
         }
+
+
     }
 }
