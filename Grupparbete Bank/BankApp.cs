@@ -62,7 +62,7 @@ namespace Grupparbete_Bank
             {
                 Console.WriteLine($"Välkommen, {loggedInUser.Username}!");
 
-                loggedInUser.AddAccount(new BankAccount("2001", AccountType.Saldokonto,Currency.SEK ,20000));
+                //loggedInUser.AddAccount(new BankAccount("2001", AccountType.Saldokonto,Currency.SEK ,20000));
 
                 if (loggedInUser.Role == UserRole.Admin)
                 {
