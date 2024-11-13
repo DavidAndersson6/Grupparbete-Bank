@@ -80,5 +80,7 @@ namespace Grupparbete_Bank
             Console.WriteLine($"Överföring av {amount:C2} från konto {fromAccountNumber} till konto {toAccountNumber} har skett!");
             return true;
         }
+
+
     }
 }
