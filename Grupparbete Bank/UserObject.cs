@@ -96,7 +96,7 @@ namespace Grupparbete_Bank
             fromAccount.Withdraw(amount);
             toAccount.Deposit(amount);
 
-            Console.WriteLine($"Överföring av {amount:C2} från konto {fromAccountNumber} till konto {toAccountNumber} har skett!");
+            Console.WriteLine($"Överföring av {amount} från konto {fromAccountNumber} till konto {toAccountNumber} har skett!");
             return true;
         }
 
