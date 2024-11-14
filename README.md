@@ -6,8 +6,11 @@ The application is designed to provide a straightforward and user-friendly exper
 
 ## Table of contents
 [FlammanBank](#introduction)  
+  
 [Features](#features)  
+  
 [Installation](#installation)  
+  
 [The Team](#theTeam)  
 
 
@@ -38,8 +41,11 @@ cd Grupparbete-Bank
 
 ## The Team
 David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
+  
 Alfred Ochieng Osewe Okoth - [alfrokot100](https://github.com/alfrokot100)  
+  
 Henric Kurtsson - [Trucksson](https://github.com/Trucksson)  
+  
 Hanna Mikho - [hmikho](https://github.com/hmikho) 
 
 
