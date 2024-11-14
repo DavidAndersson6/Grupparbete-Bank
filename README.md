@@ -6,14 +6,16 @@ The application is designed to provide a straightforward and user-friendly exper
 
 ## Installation
 
+### Prerequisites
 Before you start, make sure you have the following installed:
 - [.NET SDK](https://dotnet.microsoft.com/download/dotnet) (compatible with the version used in this project
 
-- Clone the respitory:
-  ```bash git clone https://github.com/DavidAndersson6/Grupparbete-Bank.git  
+### Step 1: Clone the Project
+Clone the project repository from GitHub to your local machine with the following commands:
 
+```bash
+git clone https://github.com/DavidAndersson6/Grupparbete-Bank.git
 cd Grupparbete-Bank
-
 
 
 
