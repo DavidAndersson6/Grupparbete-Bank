@@ -4,6 +4,19 @@
 This is a bank application built in C# and utilizes object-oriented programming to offer users a range of banking services. The application enable users to create an account, open and manage savings accounts, track balances and activity across accounts and view account details.
 The application is designed to provide a straightforward and user-friendly experience for securely and efficiently managing finances and accounts.
 
+## Table of contents
+1. [FlammanBank](#introduction)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [The Team](#theTeam)
+
+
+## Features
+-
+-
+-
+
+
 ## Installation
 
 ### Prerequisites
