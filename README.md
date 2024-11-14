@@ -5,13 +5,17 @@ This is a bank application built in C# and utilizes object-oriented programming 
 The application is designed to provide a straightforward and user-friendly experience for securely and efficiently managing finances and accounts.
 
 ## Table of contents
-[FlammanBank](#introduction)  
+* [FlammanBank](#introduction)  
   
-[Features](#features)  
+* [Features](#features)  
   
-[Installation](#installation)  
+* [Installation](#installation)
+
+* [Structure](#structure) 
+
+* [Built with](#buildWith) 
   
-[The Team](#theTeam)  
+* [The Team](#theTeam)  
 
 
 ## Features
@@ -36,7 +40,13 @@ Step 2: Navigate to the project dictionary
 cd Grupparbete-Bank
 ```
 
+## Structure
+-
+-
+-
 
+## Built with
+* [C#](http://www.dropwizard.io/1.0.2/docs/](https://learn.microsoft.com/en-us/dotnet/csharp/)) - Programming language
 
 
 ## The Team
