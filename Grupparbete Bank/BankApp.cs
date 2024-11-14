@@ -222,6 +222,7 @@ namespace Grupparbete_Bank
                 Console.WriteLine($"Kontonummer: {account.AccountNumber} | Typ: {account.Type} | Saldo: {account.Balance} | Valuta: {account.AccountCurrency}");
 
             }
+            Console.WriteLine();
         }
         private void TransferBetweenUserAccounts()
         {
@@ -309,7 +310,21 @@ namespace Grupparbete_Bank
                     return;
                 }
 
-                // Lägg till lånet till användarens konto (du kan skapa ett särskilt "lånekonto" om du vill)
+                decimal interestRate = 0.05m; //5% ränta
+                decimal interestAmount = interestRate * loanAmount;
+
+                Console.WriteLine($"Om du lånar {loanAmount} kommer du behöva betala {interestAmount} i ränta.");
+
+                Console.Write("Vill du gå vidare? Ja/Nej: ");
+                string conformation = Console.ReadLine().Trim().ToLower();
+
+                if(conformation != "ja") 
+                {
+                    Console.WriteLine("Lånet avbröts");
+                    return;
+                }
+
+                // Lägger till lånet till användarens konto. Om användaren accepterar.
                 BankAccount primaryAccount = loggedInUser.Accounts.FirstOrDefault();
                 if (primaryAccount != null)
                 {
