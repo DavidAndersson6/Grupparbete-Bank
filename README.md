@@ -49,8 +49,32 @@ cd Grupparbete-Bank
 
 ## Code structure
 - Class 1: BankApp.cs 
+Represents the bank's core functionality, managing users, accounts, transactions, and exchange rates. It also enforces security measures, such as locking accounts after multiple failed login attempts.  
+  
+Methods:  
 
--
+SetDefaultExchangeRates(): Sets default exchange rates for common currency pairs (e.g., SEK → USD, USD → SEK).  
+RegisterUser(): Registers a new user. If the username exists, an error message is shown. Customers can select a preferred currency, and a new account is created in that currency or the default (SEK).  
+Login(): Allows administrators to create new users. Validates permissions before calling RegisterUser().  
+UpdateExchangeRate(): Updates the exchange rate for a specific currency pair.  
+ConvertCurrency(): Converts an amount between two currencies based on exchange rates. Skips conversion if no rate exists for the pair.  
+TransferToOtherUser(): Manages transfers between accounts. Verifies the sender's balance and searches for the recipient's account. Converts currencies if necessary using ConvertCurrency().  
+Purpose:  
+This class serves as the backbone of the banking system, handling operations like user registration, currency management, and inter-account transfers. It ensures accurate and secure financial operations through validation and conversion logic.  
+
+- 2. Bank.CS  
+Manages users, accounts, transactions, and exchange rates, with built-in security features like account locking.  
+  
+Methods:  
+
+SetDefaultExchangeRates(): Initializes standard exchange rates for common currency pairs.  
+RegisterUser(): Registers new users and creates accounts in a selected or default currency.  
+Login(): Validates admin permissions and allows user creation via RegisterUser().  
+UpdateExchangeRate(): Updates specific currency pair exchange rates.  
+ConvertCurrency(): Converts amounts between currencies using existing exchange rates.  
+TransferToOtherUser(): Executes user-to-user transfers, including currency conversion if needed.  
+Purpose:  
+Core functionality for user and account management, currency handling, and secure transactions.  
 -
 
 ## The Team
