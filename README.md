@@ -9,13 +9,15 @@ The application is designed to provide a straightforward and user-friendly exper
   
 * [Features](#features)  
   
-* [Installation](#installation)
+* [Getting started](#gettingStarted)
 
-* [Structure](#structure) 
+* [Code structure](#codeStructure) 
 
-* [Built with](#buildWith) 
+* [Usage](#usage) 
   
-* [The Team](#theTeam)  
+* [The Team](#theTeam)
+
+* [Diagrams](#diagrams)
 
 
 ## Features
@@ -27,12 +29,14 @@ Users can open savings accounts with interest calculations and apply for loans w
 Users can view detailed transaction logs, while transactions are processed every 15 minutes for better control.  
 
 
-## Installation
+## Getting Started
 
 ### Prerequisites
 Before you start, make sure you have the following installed:
-- [.NET SDK](https://dotnet.microsoft.com/download/dotnet) (compatible with the version used in this project
+- [.NET SDK](https://dotnet.microsoft.com/download/dotnet) (compatible with the version used in this project  
+- A code editor, e.g., Visual Studio.
 
+### Installation
 Step 1: Clone the Project
 Clone the project repository from GitHub to your local machine with the following commands:
 ```bash
@@ -43,13 +47,20 @@ Step 2: Navigate to the project dictionary
 cd Grupparbete-Bank
 ```
 
-## Structure
--
+## Code structure
+- Class 1: BankApp.cs 
+
 -
 -
 
-## Built with
-* [C#](http://www.dropwizard.io/1.0.2/docs/](https://learn.microsoft.com/en-us/dotnet/csharp/)) - Programming language
+## The Team
+David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
+  
+Alfred Ochieng Osewe Okoth - [alfrokot100](https://github.com/alfrokot100)  
+  
+Henric Kurtsson - [Trucksson](https://github.com/Trucksson)  
+  
+Hanna Mikho - [hmikho](https://github.com/hmikho) 
 
 # Diagrams
 
@@ -60,15 +71,6 @@ cd Grupparbete-Bank
 ## Use case diagram
 ![Use case diagram](https://github.com/user-attachments/assets/70589340-55c9-46ae-9e30-144c8a6fcedd)
 
-
-## The Team
-David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
-  
-Alfred Ochieng Osewe Okoth - [alfrokot100](https://github.com/alfrokot100)  
-  
-Henric Kurtsson - [Trucksson](https://github.com/Trucksson)  
-  
-Hanna Mikho - [hmikho](https://github.com/hmikho) 
 
 
 
