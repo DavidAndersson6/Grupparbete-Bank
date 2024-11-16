@@ -19,11 +19,11 @@ The application is designed to provide a straightforward and user-friendly exper
 
 
 ## Features
-- Account Overview and Management  
+- Account Overview and Management:    
 Users can view their account balances, transfer funds internally and externally, and open new accounts, including foreign currency accounts.  
-- Savings and Loans  
+- Savings and Loans:    
 Users can open savings accounts with interest calculations and apply for loans with limits based on their current holdings.  
-- Transaction Logs and Scheduling
+- Transaction Logs and Scheduling:    
 Users can view detailed transaction logs, while transactions are processed every 15 minutes for better control.  
 
 
