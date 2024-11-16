@@ -51,7 +51,8 @@ cd Grupparbete-Bank
 # Diagrams
 
 ## Class diagram
-<img width="1400" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/5324d4a1-8ac9-4048-a386-79f4058e2bf3">
+<img width="680" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/a8f3035c-4f9b-4e04-ad2d-0668e8108387">
+
 
 ## Use case diagram
 ![Use case diagram](https://github.com/user-attachments/assets/70589340-55c9-46ae-9e30-144c8a6fcedd)
