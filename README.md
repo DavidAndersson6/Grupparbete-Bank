@@ -13,11 +13,11 @@ The application is designed to provide a straightforward and user-friendly exper
 
 * [Code structure](#codeStructure) 
 
-* [Usage](#usage) 
-  
-* [The Team](#theTeam)
+* [Usage](#usage)
 
 * [Diagrams](#diagrams)
+  
+* [The Team](#theTeam)
 
 
 ## Features
@@ -48,10 +48,10 @@ cd Grupparbete-Bank
 ```
 
 ## Code structure
-- Class 1: BankApp.cs 
+### - Class 1: BankApp.cs   
 Represents the bank's core functionality, managing users, accounts, transactions, and exchange rates. It also enforces security measures, such as locking accounts after multiple failed login attempts.  
   
-Methods:  
+#### Methods:  
 
 SetDefaultExchangeRates(): Sets default exchange rates for common currency pairs (e.g., SEK → USD, USD → SEK).  
 RegisterUser(): Registers a new user. If the username exists, an error message is shown. Customers can select a preferred currency, and a new account is created in that currency or the default (SEK).  
@@ -59,32 +59,50 @@ Login(): Allows administrators to create new users. Validates permissions before
 UpdateExchangeRate(): Updates the exchange rate for a specific currency pair.  
 ConvertCurrency(): Converts an amount between two currencies based on exchange rates. Skips conversion if no rate exists for the pair.  
 TransferToOtherUser(): Manages transfers between accounts. Verifies the sender's balance and searches for the recipient's account. Converts currencies if necessary using ConvertCurrency().  
-Purpose:  
+#### Purpose:  
 This class serves as the backbone of the banking system, handling operations like user registration, currency management, and inter-account transfers. It ensures accurate and secure financial operations through validation and conversion logic.  
 
-- 2. Bank.CS  
+### - Class 2: Bank.CS  
 Manages users, accounts, transactions, and exchange rates, with built-in security features like account locking.  
   
-Methods:  
-
+#### Methods:  
+  
 SetDefaultExchangeRates(): Initializes standard exchange rates for common currency pairs.  
 RegisterUser(): Registers new users and creates accounts in a selected or default currency.  
 Login(): Validates admin permissions and allows user creation via RegisterUser().  
 UpdateExchangeRate(): Updates specific currency pair exchange rates.  
 ConvertCurrency(): Converts amounts between currencies using existing exchange rates.  
 TransferToOtherUser(): Executes user-to-user transfers, including currency conversion if needed.  
-Purpose:  
+  
+#### Purpose:  
 Core functionality for user and account management, currency handling, and secure transactions.  
--
 
-## The Team
-David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
+### - Class 3: BankAccount.cs  
+Manages bank accounts, handling basic operations like deposits and withdrawals while ensuring transaction validity.  
+
+#### Methods:  
+
+Deposit(decimal amount): Deposits a positive amount into the account, increasing the balance.  
+Withdraw(decimal amount): Withdraws a positive amount if the balance is sufficient. Returns true if successful, false if not.  
   
-Alfred Ochieng Osewe Okoth - [alfrokot100](https://github.com/alfrokot100)  
+#### Purpose:  
+Handles account transactions, ensuring valid deposits and withdrawals for different account and currency types.  
+
+### - Class 4: UserObjects.cs  
+Defines user roles, properties, and methods for managing users and their accounts. Implements account security with failed login attempts, account locking, and unlocking mechanisms.  
   
-Henric Kurtsson - [Trucksson](https://github.com/Trucksson)  
+#### Methods:  
+
+CheckPassword(string password): Verifies if the provided password matches the user’s password.  
+AddFailedAttempts(): Increases the count of failed login attempts and locks the account after three failed attempts.  
+ResetFailedAttempts(): Resets the failed login attempt counter.  
+LockAccount(): Locks the user’s account for a specified duration (e.g., 1 minute).  
+UnlockAccount(): Unlocks the user’s account and resets the lock status.  
+AddAccount(BankAccount account): Associates a new bank account with the user.  
+TransferBetweenAccount(string fromAccountNumber, string toAccountNumber, decimal amount): Transfers funds between two accounts owned by the user, verifying balance and account existence.  
   
-Hanna Mikho - [hmikho](https://github.com/hmikho) 
+#### Purpose:  
+This class manages user details, including roles, account security, and associated bank accounts. It ensures secure login attempts and supports basic operations like transferring funds between a user’s accounts.
 
 # Diagrams
 
@@ -94,6 +112,15 @@ Hanna Mikho - [hmikho](https://github.com/hmikho)
 
 ## Use case diagram
 ![Use case diagram](https://github.com/user-attachments/assets/70589340-55c9-46ae-9e30-144c8a6fcedd)
+
+## The Team
+David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
+  
+Alfred Ochieng Osewe Okoth - [alfrokot100](https://github.com/alfrokot100)  
+  
+Henric Kurtsson - [Trucksson](https://github.com/Trucksson)  
+  
+Hanna Mikho - [hmikho](https://github.com/hmikho) 
 
 
 
