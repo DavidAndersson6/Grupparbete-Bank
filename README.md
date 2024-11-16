@@ -48,6 +48,14 @@ cd Grupparbete-Bank
 ## Built with
 * [C#](http://www.dropwizard.io/1.0.2/docs/](https://learn.microsoft.com/en-us/dotnet/csharp/)) - Programming language
 
+# Diagrams
+
+## Class diagram
+<img width="1400" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/5324d4a1-8ac9-4048-a386-79f4058e2bf3">
+
+## Use case diagarm
+![Use case diagram](https://github.com/user-attachments/assets/70589340-55c9-46ae-9e30-144c8a6fcedd)
+
 
 ## The Team
 David Andersson - [DavidAndersson6](https://github.com/DavidAndersson6)  
