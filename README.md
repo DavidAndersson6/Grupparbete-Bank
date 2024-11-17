@@ -96,7 +96,7 @@ Defines user roles, properties, and methods for managing users and their account
 CheckPassword(string password): Verifies if the provided password matches the user’s password.  
 AddFailedAttempts(): Increases the count of failed login attempts and locks the account after three failed attempts.  
 ResetFailedAttempts(): Resets the failed login attempt counter.  
-LockAccount(): Locks the user’s account for a specified duration (e.g., 1 minute).  
+LockAccount(): Locks the user’s account for a specified duration.
 UnlockAccount(): Unlocks the user’s account and resets the lock status.  
 AddAccount(BankAccount account): Associates a new bank account with the user.  
 TransferBetweenAccount(string fromAccountNumber, string toAccountNumber, decimal amount): Transfers funds between two accounts owned by the user, verifying balance and account existence.  
