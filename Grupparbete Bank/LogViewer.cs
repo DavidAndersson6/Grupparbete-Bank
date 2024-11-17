@@ -8,15 +8,15 @@ using static Grupparbete_Bank.Transaction;
 namespace Grupparbete_Bank
 {
 
-        public class LogViewer
+    public class LogViewer
+    {
+        public static void ShowLog()
         {
-            public static void ShowLog()
-            {
-                // Display log entries
-                Console.WriteLine("Transaction Log:");
-                TransactionLogger.Instance.DisplayLog();
-            }
+            // Display log entries
+            Console.WriteLine("Transaction Log:");
+            TransactionLogger.Instance.DisplayLog();
         }
-
     }
+
+}
 

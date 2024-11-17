@@ -8,115 +8,52 @@ using static Grupparbete_Bank.Transaction;
 
 namespace Grupparbete_Bank
 {
+    public enum AccountType
+    {
+        Sparkonto,
+        Saldokonto
+    }
+
+    public enum Currency
+    {
+        SEK,
+        USD,
+        EUR
+    }
     public class BankAccount
     {
-        public int AccountId { get; set; }
+        public AccountType Type { get; private set; }
         public decimal Balance { get; set; }
-        public string AccountHolder { get; set; }
+        public string AccountNumber { get; set; }
+        public Currency AccountCurrency { get; set; } // Currency in which the account operates
 
-        public static List<BankAccount> bankAccounts;
-
-
-
-
-        public BankAccount(int accountId, decimal balance, string accountHolder)
+        // Constructor to initialize account details
+        public BankAccount(string accountNumber, AccountType type, Currency currency, decimal startBalance = 0)
         {
-            AccountId = accountId;
-            Balance = balance;
-            AccountHolder = accountHolder;
+            Type = type;
+            Balance = startBalance;
+            AccountNumber = accountNumber;
+            AccountCurrency = currency;
         }
 
-
-        public static void InitializeAccounts()
+        // Method to deposit money into the account
+        public void Deposit(decimal amount)
         {
-            bankAccounts = new List<BankAccount>
+            if(amount >= 0)
             {
-                new BankAccount(1, 1000.5m, "Alice"),
-                new BankAccount(2, 600.755m, "Markus")
-            };
-        }
-
-
-        public static void ListAccounts()
-        {
-          
-            foreach (BankAccount bankAccount in bankAccounts)
-            {
-                Console.WriteLine($"Account ID: {bankAccount.AccountId}, Balance: {bankAccount.Balance}, Holder: {bankAccount.AccountHolder}");
+                Balance += amount;
             }
         }
 
-
-        //int sourceAccountId, int targetAccountId, decimal amount
-        public static void TransferInternalAccount()
+        // Method to withdraw money from the account, ensuring sufficient balance
+        public bool Withdraw(decimal amount)
         {
-
-            Console.WriteLine("Write Account ID of the account you want to withdraw from: ");
-            if (int.TryParse(Console.ReadLine(), out int sourceAccountId))
+            if(amount > 0 && amount <= Balance)
             {
-                // Find the source account in the list
-                BankAccount sourceAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == sourceAccountId);
-
-                if (sourceAccount != null)
-                {
-                    Console.WriteLine("Write Account ID of the account you want to transfer to: ");
-                    if (int.TryParse(Console.ReadLine(), out int targetAccountId))
-                    {
-                        // Find the target account in the list
-                        BankAccount targetAccount = bankAccounts.FirstOrDefault(acc => acc.AccountId == targetAccountId);
-
-                        if (targetAccount != null)
-                        {
-                            Console.WriteLine("Enter amount to transfer: ");
-                            if (decimal.TryParse(Console.ReadLine(), out decimal amount) && amount > 0)
-                            {
-                                if (sourceAccount.Balance >= amount)
-                                {
-
-                                    // Perform the transfer
-                                    sourceAccount.Balance -= amount;
-                                    targetAccount.Balance += amount;
-                                    Console.WriteLine("Transfer successful!");
-                                    TransactionLogger.Instance.AddLogEntry(
-                                                                          "Transfer",
-                                                                          amount,
-                                                                          sourceAccount.AccountId.ToString(),
-                                                                          targetAccount.AccountId.ToString(),
-                                                                          "Funds transfer between accounts"
-                                                                      );
-
-                           
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Insufficient funds.");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid amount entered.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Target account not found.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid target account ID.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Source account not found.");
-                }
+                Balance -= amount;
+                return true;
             }
-            else
-            {
-                Console.WriteLine("Invalid source account ID.");
-            }
+            return false;
         }
-
     }
 }
