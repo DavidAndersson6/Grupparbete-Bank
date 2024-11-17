@@ -105,6 +105,8 @@ TransferBetweenAccount(string fromAccountNumber, string toAccountNumber, decimal
 This class manages user details, including roles, account security, and associated bank accounts. It ensures secure login attempts and supports basic operations like transferring funds between a user’s accounts.
 
 # Diagrams
+![Blank diagram](https://github.com/user-attachments/assets/dd6257da-b3c4-43e7-94ff-a8d813515078)
+
 
 ## Class diagram
 <img width="680" alt="ClassDiagram1" src="https://github.com/user-attachments/assets/a8f3035c-4f9b-4e04-ad2d-0668e8108387">
