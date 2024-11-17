@@ -7,8 +7,9 @@ namespace Grupparbete_Bank
     {
         static void Main(string[] args)
         {
+            
             BankApp app = new BankApp();
-            app.Run();
+            app.Run();// Runs the program
         }
     }
 }

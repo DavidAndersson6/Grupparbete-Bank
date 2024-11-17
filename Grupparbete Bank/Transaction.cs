@@ -26,6 +26,7 @@ namespace Grupparbete_Bank
 
             public static TransactionLogger Instance => _instance;
 
+            // Adds a new transaction entry to the log
             public void AddLogEntry(string transactionType, decimal amount, string sourceAccount, string destinationAccount, string description, string sourceAccountCurrency)
             {
                 {
@@ -42,6 +43,8 @@ namespace Grupparbete_Bank
                     _transactionLog.Add(transaction);
                 }
             }
+
+            // Formats currency amounts based on the provided currency type
             private static string FormatCurrency(decimal amount, string currency)
             {
                 var cultureInfo = currency switch
@@ -54,6 +57,8 @@ namespace Grupparbete_Bank
 
                 return amount.ToString("C", cultureInfo);
             }
+
+            // Displays the entire transaction log with formatted details
             public void DisplayLog()
             {
                 foreach (var transaction in _transactionLog)

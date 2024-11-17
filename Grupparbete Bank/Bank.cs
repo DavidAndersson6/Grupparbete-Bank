@@ -16,12 +16,14 @@ namespace Grupparbete_Bank
         public Bank()
         {
             users = new List<User>();
-            users.Add(new User("admin", "admin123", UserRole.Admin));
-            users.Add(new User("kund", "kund123", UserRole.Customer));
+            users.Add(new User("admin", "admin123", UserRole.Admin)); // Default admin user
+            users.Add(new User("kund", "kund123", UserRole.Customer)); // Default customer user
 
             exchangeRates = new Dictionary<string, decimal>();
             SetDefaultExchangeRates();
         }
+
+        // Sets the default exchange rates between supported currencies
         private void SetDefaultExchangeRates()
         {
             exchangeRates["SEK->USD"] = 0.10m;
@@ -29,6 +31,8 @@ namespace Grupparbete_Bank
             exchangeRates["SEK->EUR"] = 0.09m;
             exchangeRates["EUR->SEK"] = 11.0m;
         }
+
+        // Allows users to register with the bank, including the creation of an account
         public User RegisterUser(string username, string password, UserRole role)
         {
             if (users.Exists(u => u.Username == username))
@@ -43,6 +47,7 @@ namespace Grupparbete_Bank
 
             if(role == UserRole.Customer)
             {
+                // Allow the customer to select a currency for their savings account
                 Console.WriteLine("Välj valuta för sparkontot:");
                 foreach (Currency currency in Enum.GetValues(typeof(Currency)))
                 {
@@ -51,7 +56,7 @@ namespace Grupparbete_Bank
 
                 if (Enum.TryParse(Console.ReadLine(), out Currency selectedCurrency))
                 {
-                    string accountNumber = "100" + (users.Count + 1).ToString(); // Generera unikt kontonummer
+                    string accountNumber = "100" + (users.Count + 1).ToString(); 
                     newUser.AddAccount(new BankAccount(accountNumber, AccountType.Sparkonto, selectedCurrency, 0));
                    // Console.WriteLine($"Ett sparkonto har skapats med valuta: {selectedCurrency}");
                 }
@@ -65,7 +70,7 @@ namespace Grupparbete_Bank
                 //newUser.AddAccount(new BankAccount("100" + (users.Count + 1).ToString(), AccountType.Sparkonto, 0)); // Skapar ett konto med unikt kontonummer
             }
 
-            users.Add(newUser);//Användare sparad i listan
+            users.Add(newUser);
             Console.WriteLine($"Användare {username} är skapad");
             return newUser;
         }
@@ -100,6 +105,8 @@ namespace Grupparbete_Bank
                 return null;
             }
         }
+
+        // Allows admins to create new users (customers or other admins)
         public void CreateUser(User adminUser, string username, string password, UserRole role)
         {
             if (adminUser.Role != UserRole.Admin)
@@ -111,6 +118,7 @@ namespace Grupparbete_Bank
 
         }
 
+        // Updates the exchange rate between two currencies
         public void UpdateExchangeRate(string fromCurrency, string toCurrency, decimal rate)
         {
             string key = $"{fromCurrency}->{toCurrency}";
@@ -126,12 +134,12 @@ namespace Grupparbete_Bank
                 return amount * rate;
             }
             Console.WriteLine("Ingen växelkurs tillgänglig för denna valutakombination.");
-            return amount; // Om ingen kurs finns, ingen växling sker
+            return amount; // No conversion if the rate is unavailable
         }
 
         public bool TransferToOtherUser(User sender, string toAccountNumber, decimal amount)
         {
-            // Kontrollera att avsändarens konto har täckning
+            // Checking that the user account has enough balance
             BankAccount fromAccount = sender.Accounts.FirstOrDefault(acc => acc.Balance >= amount);
             if (fromAccount == null)
             {
@@ -139,7 +147,7 @@ namespace Grupparbete_Bank
                 return false;
             }
 
-            // Leta efter mottagarkontot
+            // Looking for the recivers account
             BankAccount toAccount = users
                 .SelectMany(user => user.Accounts)
                 .FirstOrDefault(acc => acc.AccountNumber == toAccountNumber);
@@ -150,14 +158,14 @@ namespace Grupparbete_Bank
                 return false;
             }
 
-            // Utför växling om kontona har olika valutor
+            // Doing the exchange if the accounts has different currencies
             decimal amountToTransfer = amount;
             if (fromAccount.AccountCurrency != toAccount.AccountCurrency)
             {
                 amountToTransfer = ConvertCurrency(amount, fromAccount.AccountCurrency, toAccount.AccountCurrency);
             }
 
-            // Gör överföringen
+            // Complete the transfer
             fromAccount.Withdraw(amount);
             toAccount.Deposit(amountToTransfer);
 

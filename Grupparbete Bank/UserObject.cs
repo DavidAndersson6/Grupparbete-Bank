@@ -8,8 +8,8 @@ namespace Grupparbete_Bank
 {
     public enum UserRole
     {
-        Admin,
-        Customer
+        Admin, // Defines whether the user is an admin
+        Customer // Defines whether the user is a customer
     }
     public class User
     {
@@ -25,7 +25,7 @@ namespace Grupparbete_Bank
 
         public List<BankAccount> Accounts { get; private set; }
 
-
+        // Constructor: Initializes a User object with a username, password, role, and an empty account list
         public User(string username, string password, UserRole role)
         {
             this.Password = password;
@@ -37,19 +37,20 @@ namespace Grupparbete_Bank
             this.LockedUntil = DateTime.MinValue; // Ingen låsning 
 
         }
+        // Verifies if the provided password matches the user's password
         public bool CheckPassword(string password)
         {
             return Password == password;
         }
 
+        // Increases the count of failed login attempts and locks the account if the threshold is reached
         public void AddFailedAttempts()
         {
             FailedLoginAttempts++;
 
             if (FailedLoginAttempts >= 3)
             {
-                //IsLocked = true;
-                LockAccount();  // Lås kontot efter tre misslyckade inloggningar
+                LockAccount(); 
 
                 Console.WriteLine("Du har misslyckts för många gånger. Kontot låser sig nu..");
             }
@@ -62,13 +63,14 @@ namespace Grupparbete_Bank
         public void LockAccount()
         {
             IsLocked = true;
-            LockedUntil = DateTime.Now.AddMinutes(1);  // Kontot låses i 1 minut
+            LockedUntil = DateTime.Now.AddMinutes(1);  //Account locked for 1 minute
         }
 
+        // Unlocks the account manually
         public void UnlockAccount()
         {
             IsLocked = false;
-            LockedUntil = DateTime.MinValue; // Återställ låsningen
+            LockedUntil = DateTime.MinValue; 
             Console.WriteLine("Kontot har återaktiverats.");
         }
 
@@ -78,6 +80,7 @@ namespace Grupparbete_Bank
             Accounts.Add(account);
         }
 
+        // Transfers money between the user's own accounts if sufficient funds are available
         public bool TransferBetweenAccount(string fromAccountNumber, string toAccountNumber, decimal amount)
         {
             BankAccount fromAccount = Accounts.Find(acc => acc.AccountNumber == fromAccountNumber);

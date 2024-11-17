@@ -41,14 +41,14 @@ namespace Grupparbete_Bank
         }
         public void Run()
         {
-            Console.OutputEncoding = Encoding.UTF8; //Stöder specialtecken
-
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.OutputEncoding = Encoding.UTF8; // Supports special characters in console output
+            Console.ForegroundColor = ConsoleColor.Red; // Sets color for the bank title display
             Console.WriteLine(bankTitleArt);
             Console.WriteLine(titleArt);
             Console.ResetColor();
             bool isRunning = true;
 
+            // Main menu loop
             while (isRunning)
             {
                 Console.WriteLine("======Meny======");
@@ -114,6 +114,7 @@ namespace Grupparbete_Bank
                 Console.Write("Val: ");
                 string choice = Console.ReadLine();
 
+                // Admin menu actions
                 switch (choice)
                 {
                     case "1":
@@ -134,6 +135,7 @@ namespace Grupparbete_Bank
         }
         private void CreateUser()
         {
+            // Handles the creation of a new customer user
             Console.Write("Ange ett nytt användarnamn: ");
             string username = Console.ReadLine();
 
@@ -152,7 +154,7 @@ namespace Grupparbete_Bank
             Currency selectedCurrency;
             if (Enum.TryParse(Console.ReadLine(), out selectedCurrency))
             {
-                // Skapa användaren och konto med vald valuta
+                // Register the user and create an account with the selected currency
                 User newUser = bank.RegisterUser(username, password, UserRole.Customer);
 
                 if (newUser != null)
@@ -160,7 +162,8 @@ namespace Grupparbete_Bank
                     Console.Write("Ange startbelopp för saldokontot: ");
                     decimal startBalance = decimal.Parse(Console.ReadLine());
 
-                    string accountNumber = $"ACC{new Random().Next(1000, 9999)}"; // Generera ett konto-ID
+                    // Generate a unique account number and create the account
+                    string accountNumber = $"ACC{new Random().Next(1000, 9999)}";
                     BankAccount newAccount = new BankAccount(accountNumber, AccountType.Saldokonto, selectedCurrency, startBalance);
 
                     newUser.AddAccount(newAccount);
@@ -176,6 +179,9 @@ namespace Grupparbete_Bank
         public void ShowUserMenu()
         {
             bool inUserMenu = true;
+
+            // Main menu for loggen-in users
+            // The menu loops until the user logs out.
 
             while (inUserMenu)
             {
@@ -217,7 +223,8 @@ namespace Grupparbete_Bank
         }
         private void ShowAccounts()
         {
-            foreach(var account in loggedInUser.Accounts)
+            // Displays all accounts belonging to the logged-in user.
+            foreach (var account in loggedInUser.Accounts)
             {
                 Console.WriteLine($"Kontonummer: {account.AccountNumber} | Typ: {account.Type} | Saldo: {account.Balance} | Valuta: {account.AccountCurrency}");
 
@@ -226,6 +233,8 @@ namespace Grupparbete_Bank
         }
         private void TransferBetweenUserAccounts()
         {
+            // Allows the user to transfer funds between their own accounts.
+
             Console.WriteLine("Här kan du överföra pengar mellan dina konton");
             ShowAccounts();
 
@@ -242,7 +251,7 @@ namespace Grupparbete_Bank
 
                 if (succes)
                 {
-                //    Console.WriteLine($"Överföringen av {amount} från {fromAccount} lyckades");
+                    // Logs the transfer if successful
 
                     var sourceAccount = loggedInUser.Accounts.FirstOrDefault(a => a.AccountNumber == fromAccount);
                     if (sourceAccount != null)
@@ -269,6 +278,8 @@ namespace Grupparbete_Bank
 
         private void TransferToOtherUser()
         {
+            // Enables the user to transfer money to another user's account.
+
             Console.WriteLine("Överför pengar till ett annat konto");
 
             Console.WriteLine("Ange mottagarens kontonummer");
@@ -292,6 +303,7 @@ namespace Grupparbete_Bank
 
         public void LoanMoney()
         {
+            // Allows the user to request a loan with a maximum limit based on their account balance.
             if (loggedInUser == null || loggedInUser.Role != UserRole.Customer)
             {
                 Console.WriteLine("Endast inloggade kunder kan ansöka om lån.");
@@ -302,7 +314,7 @@ namespace Grupparbete_Bank
             if (decimal.TryParse(Console.ReadLine(), out decimal loanAmount) && loanAmount > 0)
             {
                 decimal totalBalance = loggedInUser.Accounts.Sum(account => account.Balance);
-                decimal maxLoanAmount = totalBalance * 5;  // Maxgräns
+                decimal maxLoanAmount = totalBalance * 5;  // Maximum loan is 5x total balance
 
                 if (loggedInUser.TotalLoanAmount + loanAmount > maxLoanAmount)
                 {
@@ -310,7 +322,7 @@ namespace Grupparbete_Bank
                     return;
                 }
 
-                decimal interestRate = 0.05m; //5% ränta
+                decimal interestRate = 0.05m; // Fixed interest rate (5%)
                 decimal interestAmount = interestRate * loanAmount;
 
                 Console.WriteLine($"Om du lånar {loanAmount} kommer du behöva betala {interestAmount} i ränta.");
@@ -324,7 +336,7 @@ namespace Grupparbete_Bank
                     return;
                 }
 
-                // Lägger till lånet till användarens konto. Om användaren accepterar.
+                // Approve loan and deposit the amount into the user's primary account
                 BankAccount primaryAccount = loggedInUser.Accounts.FirstOrDefault();
                 if (primaryAccount != null)
                 {
